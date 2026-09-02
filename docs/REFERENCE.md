@@ -1,4 +1,4 @@
-﻿# Referencia detallada
+# Referencia detallada
 
 Documentación extendida. Inicio rápido: [GETTING_STARTED.md](../GETTING_STARTED.md).
 
@@ -273,7 +273,7 @@ Cada agente tiene un rol definido, permisos de filesystem limitados a su respons
 
 ---
 
-## Los 12 comandos slash
+## Los 16 comandos slash
 
 Los comandos slash son instrucciones predefinidas invocables directamente en Claude Code con `/comando`.
 
@@ -286,15 +286,19 @@ Los comandos slash son instrucciones predefinidas invocables directamente en Cla
 | `/architect` | Propuesta arquitectonica con opciones, pros/cons y decision documentada |
 | `/plan` | Planificacion de una feature: fases, archivos afectados, estimacion |
 | `/deploy` | Checklist y proceso de deploy a produccion |
+| `/vercel` | Build, optimización y despliegue a Vercel con Vercel Agent Skills |
 | `/checkpoint` | Checkpoint de sesion con formato Rule 10 (DONE / VERIFIED / NEXT / RISKS) |
 | `/handoff` | Genera documento de traspaso para otra sesion o agente |
 | `/flows [modulo]` | Genera o actualiza visualizacion HTML del flujo de datos de un modulo |
 | `/domain` | Validacion de dominio: terminologia, flujos, invariantes de negocio |
-| `/frontend` | Checklist e implementacion de componentes frontend con convenciones del proyecto |
+| `/frontend` | Checklist e implementacion de componentes frontend con convenciones del proyecto y Vercel |
+| `/audit-pipeline` | Ejecuta el ciclo completo de auditoría lifecycle de 8 fases |
+| `/auto-audit` | Bucle autónomo de auditoría con corrección automática de fallos |
 
 ### Ejemplos de uso
 
 ```
+/vercel                    → optimiza y despliega la aplicación a Vercel
 /security secrets          → solo escanea hardcoded credentials
 /flows dashboard           → genera docs/flows/dashboard-flow.html
 /checkpoint                → guarda estado actual de la sesion
@@ -304,58 +308,52 @@ Los comandos slash son instrucciones predefinidas invocables directamente en Cla
 
 ---
 
-## Los 11 hooks de seguridad y calidad
+## Ecosistema de Skills (60+ Skills Especializadas)
 
-Los hooks se ejecutan automaticamente en el ciclo de vida de Claude Code y bloquean o advierten sobre operaciones peligrosas.
+El proyecto integra tres capas de skills on-demand: **Vercel Agent Skills**, **Matt Pocock Skills** y **Pipeline Lifecycle Skills**.
 
-### PreToolUse (antes de ejecutar una herramienta)
+### 1. Vercel Agent Skills (`vercel-labs/agent-skills`)
+Basado en [vercel.com/docs/agent-resources/skills](https://vercel.com/docs/agent-resources/skills) y [skills.sh](https://skills.sh):
 
-| Hook | Que bloquea |
+| Skill | Proposito |
 |---|---|
-| `01-validate-dangerous-bash.sh` | `cat .env`, `printenv`, `source .env`, `echo $SECRET` |
-| `02-token-budget-guard.sh` | Advierte cuando se acerca al limite de tokens de sesion (30k) |
-| `03-write-security-scan.py` | Detecta credenciales hardcodeadas, secretos en client-side env, `localStorage` con datos sensibles, SQL injection patterns |
-| `04-git-push-main-guard.sh` | Bloquea `git push origin main` sin que los tests hayan pasado |
-| `05-pipeline-phase-guard.py` | Verifica que el pipeline-state.json este actualizado antes de avanzar de fase |
+| `react-best-practices` | Reglas de arquitectura React, Next.js Server Components, memoización y zero-waterfall data fetching |
+| `web-design-guidelines` | Diseño de interfaz de alta calidad, contraste accesible (a11y), tokens de diseño y layouts responsivos |
+| `deploy-to-vercel` | Automatización y verificación previa para despliegues en la nube de Vercel |
+| `composition-patterns` | Patrones de composición avanzada de componentes React sin prop-drilling |
+| `react-view-transitions` | Implementación de transiciones de vista fluidas con View Transitions API |
+| `react-native-skills` | Guías y patrones de diseño para React Native |
+| `vercel-cli-with-tokens` | Uso seguro de la CLI de Vercel con autenticación basada en tokens |
+| `vercel-optimize` | Optimización de rendimiento, bundle splitting, Edge Functions y caché |
+| `writing-guidelines` | Estándares de documentación técnica y claridad expositiva |
 
-### PostToolUse (despues de ejecutar una herramienta)
+### 2. Matt Pocock Skills (`mattpocock/skills`)
+Basado en [github.com/mattpocock/skills](https://github.com/mattpocock/skills):
 
-| Hook | Que hace |
+| Skill | Proposito |
 |---|---|
-| `01-auto-checkpoint.sh` | Guarda checkpoint automatico en `.claude/logs/checkpoints/` |
-| `02-lint-on-edit.sh` | Ejecuta ESLint sobre el archivo editado |
-| `03-test-on-change.sh` | Ejecuta los tests relacionados al archivo modificado |
-| `04-flow-stale-detector.py` | Marca como `stale` los flows de datos afectados por el cambio |
+| `wayfinder` / `zoom-out` | Exploración inicial del codebase y análisis de impacto |
+| `domain-modeling` | Definición de conceptos de negocio y lenguaje ubicuo |
+| `codebase-design` | Diseño de módulos y arquitectura de interfaces públicas |
+| `improve-codebase-architecture` | Refactoring y optimización estructural del sistema |
+| `to-spec` / `to-prd` | Generación de especificaciones técnicas y requerimientos |
+| `to-tickets` / `to-issues` | Desglose atómico de features en tickets accionables |
+| `tdd` | Test-Driven Development estricto antes de escribir implementación |
+| `diagnosing-bugs` / `diagnose` | Diagnóstico sistemático de errores con aislamiento de causa raíz |
+| `implement` / `implement-spec` | Implementación paso a paso contra especificaciones validadas |
+| `code-review` / `review` | Revisión estricta de código, tipos y pruebas |
+| `grill-me` / `grill-with-docs` | Entrevista interactiva para descubrir supuestos ocultos |
+| `handoff` / `claude-handoff` | Traspaso estructurado de contexto entre sesiones |
+| `wizard` / `teach` | Asistente de configuración y generación pedagógica |
 
-### PreCompact (antes de comprimir el contexto)
-
-| Hook | Que hace |
-|---|---|
-| `01-session-summarizer.sh` | Guarda un checkpoint de sesion con el template Rule 10 para no perder contexto |
-
-### Notification
-
-| Hook | Que hace |
-|---|---|
-| `01-task-notifier` | Notifica cuando una tarea del pipeline completa o necesita intervencion |
-
-### Niveles de bloqueo
-
-| Nivel | Codigo de salida | Efecto |
-|---|---|---|
-| CRITICAL | 2 | Bloqueo total — la operacion no se ejecuta |
-| WARNING | 0 con mensaje | Aviso — la operacion continua pero queda registrada |
-
-Para suprimir un falso positivo justificado: agregar `# claude-security-ok` al final de la linea.
-
----
-
-## Los 10 skills especializados
-
-Los skills son modulos de conocimiento especializado que se cargan on-demand cuando la tarea lo requiere.
+### 3. Pipeline Lifecycle Skills (`.claude/skills/`)
 
 | Skill | Cuándo se activa |
 |---|---|
+| `audit-pipeline` | Ejecución del ciclo de 8 fases de auditoría lifecycle (scope → production) |
+| `auditor-agent-factory` | Creación y configuración de agentes auditores personalizados |
+| `auto-audit-loop` | Bucle autónomo de detección y corrección de fallos |
+| `lifecycle-orchestrator` | Coordinación de transiciones de fase y gates de calidad |
 | `skill-agent-design` | Disenar o modificar agentes AI con tool use, memoria y system prompts |
 | `skill-api-design` | Disenar APIs REST: endpoints, schemas Zod, contratos de respuesta |
 | `skill-code-review` | Revision de codigo: convenciones, tipos, tests, patrones de error |

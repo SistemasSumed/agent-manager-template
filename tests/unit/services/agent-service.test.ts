@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+process.env.OPENAI_API_KEY = process.env.OPENAI_API_KEY || 'sk-test-mock-key';
+
 // Mock OpenAI before importing the service
 vi.mock('openai', async () => {
   const mockCreate = vi.fn().mockResolvedValue({

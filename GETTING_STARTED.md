@@ -36,9 +36,10 @@ claudio doctor
 
 El wizard genera automáticamente:
 
-- `.claude/` (agentes, comandos, hooks, skills)
-- `.agents/skills/` (29 skills mattpocock — `pnpm run skills:install`)
+- `.claude/` (20 agentes, 16 comandos, 11 hooks, 60+ skills)
+- `.agents/skills/` (Vercel Agent Skills + Matt Pocock Skills — `npm run skills:install`)
 - `docs/agents/` + `CONTEXT.md` (config para el ciclo de tareas)
+- `.claude/rules/vercel-standards.md` (estándares React/Next.js y Vercel)
 - `.claude/context.md`, `architecture.md`, `memory.md`
 - `.claude/rules/domain.md` personalizado para tu dominio
 

@@ -1,6 +1,6 @@
-﻿# Agent Manager Template
+# Agent Manager Template
 
-> Setup profesional de Claude Code: pipeline de 7 fases, **12 agentes**, **13 comandos** slash, **11 hooks**, **10 skills** — un comando para empezar.
+> Setup profesional de Claude Code y AI Coding Agents: pipeline de 7 fases, **20 agentes**, **16 comandos** slash, **11 hooks**, **60+ skills especializadas** (Vercel Agent Skills + Matt Pocock Skills + Lifecycle Audit) — un comando para empezar.
 
 **Guía rápida:** [GETTING_STARTED.md](GETTING_STARTED.md) · **Referencia completa:** [docs/REFERENCE.md](docs/REFERENCE.md) · **Avanzado (opcional):** [docs/ADVANCED.md](docs/ADVANCED.md)
 
@@ -11,54 +11,66 @@
 ```bash
 git clone https://github.com/nomdedev/agent-manager-template
 cd agent-manager-template
-pnpm setup && claudio doctor && pnpm dev
+npm run setup && npx tsx src/cli/claudio.ts doctor && npm run dev
 ```
 
-Sin argumentos, `claudio` abre un **menú interactivo** que explica cada opción. También: `claudio guia` (qué hace pipeline, agentes, hooks…).
+Sin argumentos, `claudio` abre un **menú interactivo** que explica cada opción. También: `claudio guia` (qué hace pipeline, agentes, hooks, skills…).
 
 Instalar en **otro proyecto:**
 
 ```bash
-claudio init ./mi-proyecto --yes
-claudio doctor
+npx tsx src/cli/claudio.ts init ./mi-proyecto --yes
+npx tsx src/cli/claudio.ts doctor
 ```
 
 ---
 
-## Tabla de contenidos
+## Ecosistema de Skills Integrado
 
-- [Que es esto](#que-es-esto)
-- [CLI claudio — referencia completa](#cli-claudio--referencia-completa)
-- [Documentación detallada](#documentación-detallada)
-- [Los 4 niveles de Hermes Agent](#los-4-niveles-de-hermes-agent)
-- [Metodologia: el pipeline de 7 fases](#metodologia-el-pipeline-de-7-fases)
-- [Los 7 agentes especializados](#los-7-agentes-especializados)
-- [Los 12 comandos slash](#los-12-comandos-slash)
-- [Los 11 hooks de seguridad y calidad](#los-11-hooks-de-seguridad-y-calidad)
-- [Los 13 skills especializados](#los-13-skills-especializados)
-- [Pipeline lifecycle de auditoría](#pipeline-lifecycle-de-auditoría)
-- [Las 5 reglas del proyecto](#las-5-reglas-del-proyecto)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Stack tecnologico](#stack-tecnologico)
-- [Comandos de desarrollo](#comandos-de-desarrollo)
-- [Adaptarlo a tu proyecto](#adaptarlo-a-tu-proyecto)
+Este template integra de forma nativa el estándar abierto de **Agent Skills** de Vercel y Matt Pocock:
+
+- 🚀 **Vercel Agent Skills** ([vercel.com/docs/agent-resources/skills](https://vercel.com/docs/agent-resources/skills)):
+  - `react-best-practices`: Reglas de alto rendimiento, Server Components (RSC) y optimización en React / Next.js.
+  - `web-design-guidelines`: Principios de UI moderna, contraste y accesibilidad (a11y).
+  - `deploy-to-vercel`: Despliegues automáticos a la plataforma Vercel.
+  - `composition-patterns`: Patrones limpios de composición de componentes.
+  - `react-view-transitions`: Animaciones fluidas con View Transitions API.
+  - `react-native-skills`: Directrices para desarrollo móvil React Native.
+  - `vercel-cli-with-tokens`: Automatización segura de Vercel CLI con tokens.
+  - `vercel-optimize`: Caching en el Edge, bundle tuning y optimización de serverless.
+  - `writing-guidelines`: Documentación técnica clara y directa.
+
+- 🧠 **Matt Pocock Skills** ([github.com/mattpocock/skills](https://github.com/mattpocock/skills)):
+  - `wayfinder` / `zoom-out`: Mapeo y exploración de arquitectura de código.
+  - `domain-modeling` / `ubiquitous-language`: Modelado de dominio y glosario técnico.
+  - `codebase-design` & `improve-codebase-architecture`: Diseño modular y contratos.
+  - `to-spec` / `to-prd` & `to-tickets`: Especificación técnica y descomposición en issues.
+  - `tdd`: Test-Driven Development riguroso con Vitest/Jest.
+  - `diagnosing-bugs` / `diagnose`: Diagnóstico sistemático de errores e hipótesis.
+  - `implement` & `code-review`: Implementación y revisión exhaustiva de código.
+  - `grill-me`, `grill-with-docs`, `handoff`, `wizard`, `teach`, etc.
+
+- 📦 **Gestión con `npx skills`**:
+  - `npm run skills:install` — Instala todas las skills de ambos catálogos.
+  - `npm run skills:update` — Actualiza las skills a la última versión.
+  - `npm run skills:find` — Busca skills en el catálogo interactivo [skills.sh](https://skills.sh).
+  - `npm run skills:list` — Lista las skills instaladas por agente.
 
 ---
 
 ## Que es esto
 
-**Agent Manager Template** es un sistema de ingenieria asistida por IA para Claude Code. No es solo una estructura de carpetas: es una **metodologia completa** que define como un equipo de agentes especializados colabora para entregar software de calidad.
+**Agent Manager Template** es un sistema de ingeniería asistida por IA para Claude Code y AI Coding Agents. No es solo una estructura de carpetas: es una **metodología completa** que define cómo un equipo de agentes especializados colabora para entregar software de calidad.
 
-La idea central es simple: en lugar de que Claude Code sea un asistente general que hace todo, este template lo convierte en un **equipo de especialistas con roles definidos**, que trabajan bajo un pipeline secuencial con gates de calidad. Cada feature pasa por 7 fases obligatorias antes de llegar a produccion.
+La idea central es simple: en lugar de que Claude Code sea un asistente general que hace todo, este template lo convierte en un **equipo de especialistas con roles definidos**, que trabajan bajo un pipeline secuencial con gates de calidad. Cada feature pasa por 7 fases obligatorias antes de llegar a producción.
 
-**Que incluye:**
+**Qué incluye:**
 - CLI `claudio` (`init`, `doctor`, `evoluciona`) para instalar y verificar el setup
 - Pipeline de 7 fases con gates de salida verificables
-- 12 agentes especializados con permisos y protocolos definidos
-- 12 comandos slash (`/audit`, `/security`, `/test`, `/review`, `/frontend`, etc.)
-- 11 hooks que bloquean automaticamente operaciones peligrosas
-- 13 skills cargables on-demand (incl. audit-pipeline lifecycle)
-- 8 agentes lifecycle-audit (scope → production, GO/NO-GO)
+- 20 agentes especializados con permisos y protocolos definidos (12 de equipo + 8 lifecycle-audit)
+- 16 comandos slash (`/vercel`, `/audit`, `/security`, `/test`, `/review`, `/frontend`, `/architect`, etc.)
+- 11 hooks que bloquean automáticamente operaciones peligrosas
+- 60+ skills cargables on-demand en `.agents/skills/` y `.claude/skills/`
 - Vault de Obsidian y Hermes Agent — **opcionales** ([docs/ADVANCED.md](docs/ADVANCED.md))
 
 ---

@@ -9,7 +9,12 @@ import {
 import { runEvoluciona } from './evoluciona.js'
 import { isInteractive } from '../utils/ui.js'
 import { runInitFlowMenu } from './menu.js'
-import { installMattPocockSkills, hasMattPocockSkills } from '../utils/skills.js'
+import {
+  installMattPocockSkills,
+  hasMattPocockSkills,
+  installAllSkills,
+  hasVercelSkills,
+} from '../utils/skills.js'
 
 export interface RunInitOptions {
   /** Evita abrir el sub-menú (uso interno desde menu.ts) */
@@ -84,11 +89,11 @@ async function runTemplateInit(flags: InitFlags): Promise<void> {
   console.log('  pnpm run dev     → servidor en http://localhost:3000')
   console.log('  pnpm test        → tests')
   console.log('  claudio doctor   → verificar el setup\n')
-  if (!hasMattPocockSkills(cwd)) {
-    console.log('  📚 Instalando mattpocock/skills (.agents/skills/) ...\n')
+  if (!hasMattPocockSkills(cwd) || !hasVercelSkills(cwd)) {
+    console.log('  📚 Instalando skills (mattpocock + vercel-labs) ...\n')
     try {
-      installMattPocockSkills(cwd)
-      console.log('  ✅ Skills mattpocock instaladas\n')
+      installAllSkills(cwd)
+      console.log('  ✅ Skills (Matt Pocock + Vercel) instaladas\n')
     } catch {
       console.warn('  ⚠️  No se pudieron instalar skills. Ejecutá: pnpm run skills:install\n')
     }

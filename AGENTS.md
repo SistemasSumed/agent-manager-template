@@ -2,9 +2,12 @@
 
 Instrucciones para agentes en este repositorio. La fuente de verdad detallada está en [.claude/CLAUDE.md](.claude/CLAUDE.md).
 
-## Agent skills (mattpocock/skills)
+## Agent Skills (Vercel Agent Skills + mattpocock/skills)
 
-Skills instaladas en `.agents/skills/` (lockfile: `skills-lock.json`). Reinstalar: `pnpm run skills:install`.
+Skills instaladas en `.agents/skills/` y `.claude/skills/` (lockfile: `skills-lock.json`).
+- **Vercel Agent Skills:** `react-best-practices`, `web-design-guidelines`, `deploy-to-vercel`, `composition-patterns`, `react-view-transitions`, `vercel-optimize`, etc. ([vercel.com/docs/agent-resources/skills](https://vercel.com/docs/agent-resources/skills)).
+- **Matt Pocock Skills:** `tdd`, `codebase-design`, `domain-modeling`, `diagnosing-bugs`, `to-spec`, `to-tickets`, `triage`, etc. ([github.com/mattpocock/skills](https://github.com/mattpocock/skills)).
+Reinstalar o actualizar: `npm run skills:install` o `npm run skills:update`.
 
 ### Issue tracker
 

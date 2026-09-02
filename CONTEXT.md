@@ -6,6 +6,7 @@ Fuente de verdad para agentes y skills de ingeniería:
 - **Arquitectura:** [.claude/architecture.md](.claude/architecture.md)
 - **Dominio y glosario:** [.claude/rules/domain.md](.claude/rules/domain.md)
 - **Reglas 12-Rule:** [.claude/CLAUDE.md](.claude/CLAUDE.md)
+- **Estándares Vercel & React/Next.js:** [.claude/rules/vercel-standards.md](.claude/rules/vercel-standards.md)
 - **Skills mattpocock + ciclo de tareas:** [.claude/rules/mattpocock-task-cycle.md](.claude/rules/mattpocock-task-cycle.md)
 
 Configuración para skills de issues/triage: [docs/agents/](docs/agents/).
