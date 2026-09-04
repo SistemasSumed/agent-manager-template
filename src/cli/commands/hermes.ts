@@ -594,7 +594,7 @@ function runHermesStatus(): void {
   // Binary check
   let version = '⚠️  no instalado'
   try {
-    version = '✅ ' + execSync('hermes --version', { stdio: 'pipe', encoding: 'utf8' }).trim()
+    version = '✅ ' + execSync('hermes --version', { stdio: 'pipe', encoding: 'utf8', timeout: 1000 }).trim()
   } catch { /* not installed */ }
   console.log(`\n  hermes binary : ${version}`)
   console.log(`  ~/.hermes/    : ${existsSync(HERMES_HOME) ? '✅ existe' : '❌ no existe'}`)

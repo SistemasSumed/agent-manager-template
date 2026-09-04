@@ -155,7 +155,7 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "D:\\martin\\Proyectos\\agent-manager-template"
+        "C:\\Users\\Admin\\Desktop\\Proyectos\\Template"
       ],
       "env": {}
     },
@@ -165,7 +165,7 @@
         "-y",
         "@modelcontextprotocol/server-git",
         "--repository",
-        "D:\\martin\\Proyectos\\agent-manager-template"
+        "C:\\Users\\Admin\\Desktop\\Proyectos\\Template"
       ],
       "env": {}
     },

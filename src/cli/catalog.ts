@@ -249,9 +249,12 @@ Se invocan dentro de Claude Code, no en la terminal.`,
 En Windows necesitás Git Bash para bash/python.`,
   },
   skills: {
-    title: 'Skills',
-    body: `10 skills en .claude/skills/: conocimiento on-demand (testing, API design, git workflow, HTML artifacts, etc.).
-Claude los carga cuando la tarea lo requiere.`,
+    title: 'Skills (Vercel Agent Skills + Matt Pocock + Lifecycle)',
+    body: `Ecosistema completo de skills (60+ skills en .agents/skills/ y .claude/skills/):
+• Vercel Agent Skills: react-best-practices, web-design-guidelines, deploy-to-vercel, composition-patterns, react-view-transitions, vercel-optimize, etc. (https://vercel.com/docs/agent-resources/skills).
+• Matt Pocock Skills: tdd, codebase-design, domain-modeling, diagnosing-bugs, to-spec, to-tickets, triage, wayfinder, wizard, etc. (https://github.com/mattpocock/skills).
+• Pipeline Skills: audit-pipeline, auditor-agent-factory, auto-audit-loop, lifecycle-orchestrator.
+Gestionable con npx skills (add, update, find, list).`,
   },
   obsidian: {
     title: 'Vault Obsidian (opcional)',

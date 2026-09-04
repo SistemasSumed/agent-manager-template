@@ -7,7 +7,7 @@ import {
   ensureEnvFile,
 } from '../utils/project.js'
 import { patchSettingsJson, setHookPermissions } from '../utils/installer.js'
-import { hasMattPocockSkills } from '../utils/skills.js'
+import { hasMattPocockSkills, hasVercelSkills } from '../utils/skills.js'
 import { isGstackInstalled } from './gstack-installer.js'
 
 type CheckStatus = 'ok' | 'warn' | 'fail'
@@ -130,6 +130,7 @@ export async function runDoctor(cwd = process.cwd()): Promise<number> {
     results.push(checkHooksExecutable(join(claudeDir, 'hooks')))
 
     const mattOk = hasMattPocockSkills(projectPath)
+    const vercelOk = hasVercelSkills(projectPath)
     const agentsDocs = join(projectPath, 'docs', 'agents', 'issue-tracker.md')
     results.push(
       mattOk
@@ -137,6 +138,15 @@ export async function runDoctor(cwd = process.cwd()): Promise<number> {
         : {
             status: 'warn',
             message: 'mattpocock/skills no instaladas',
+            fix: 'pnpm run skills:install',
+          },
+    )
+    results.push(
+      vercelOk
+        ? { status: 'ok', message: 'vercel-labs/agent-skills (.agents/skills/ & .claude/skills/)' }
+        : {
+            status: 'warn',
+            message: 'vercel-labs/agent-skills no instaladas',
             fix: 'pnpm run skills:install',
           },
     )

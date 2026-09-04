@@ -20,26 +20,27 @@ Si el skill no está en disco, ejecutá `pnpm run skills:install` y reintentá.
 
 | Orden | Skill | Cuándo |
 | ----- | ----- | ------ |
-| 1 | `zoom-out` | No conocés el área del código o la tarea toca muchos módulos |
-| 2 | `grill-with-docs` | Requisitos ambiguos, términos nuevos, o falta `CONTEXT.md` / domain actualizado |
-| 3 | `to-prd` | La tarea necesita PRD/issue publicado (feature mediana o grande) |
-| 4 | `triage` | Issue entrante sin clasificar (label `needs-triage`) |
+| 1 | `wayfinder` / `zoom-out` | Exploración inicial del código y mapeo de dependencias |
+| 2 | `grill-with-docs` / `grill-me` | Requisitos ambiguos, clarificación de arquitectura y dominio |
+| 3 | `to-spec` / `to-prd` | Especificación formal y PRD para features medianas o grandes |
+| 4 | `to-tickets` / `to-issues` | Descomposición de tareas en issues o tickets atómicos |
+| 5 | `triage` | Issue entrante sin clasificar |
 
-Tras `to-prd`, publicá en GitHub y registrá la feature en `pipeline-state.json` si aplica.
+Tras `to-spec`, registrá la feature en `pipeline-state.json` si aplica.
 
 ---
 
 ## Pipeline de 7 fases → skills
 
-| Fase | Equipo | Skills obligatorios | Skills del template (`.claude/skills/`) |
-| ---- | ------ | ------------------- | --------------------------------------- |
-| 1–2 | Diseño | `grill-with-docs`, `prototype` (si hay duda de UX/API) | `skill-agent-design` |
-| 3 | Backend | `improve-codebase-architecture` (diseño de módulos), `tdd` (contratos/tests primero) | `skill-api-design` |
-| 4 | Seguridad | — | `skill-code-review` + agente `security-auditor` |
-| 5 | Develop | `tdd` (implementación), `review` | `skill-refactoring`, `skill-git-workflow` |
-| 6 | QA | `diagnose` si hay fallos intermitentes | `skill-testing` |
-| 6.5 | DevOps | — | agente `devops-infra` |
-| 7 | GO/NO-GO | `handoff` si la sesión termina sin GO | orquestador |
+| Fase | Equipo | Skills obligatorios | Skills Vercel & Template (`.claude/skills/`) |
+| ---- | ------ | ------------------- | --------------------------------------------- |
+| 1–2 | Dominio / Diseño | `domain-modeling`, `grill-with-docs`, `prototype` | `web-design-guidelines`, `composition-patterns`, `skill-agent-design` |
+| 3 | Backend & Arquitectura | `codebase-design`, `improve-codebase-architecture`, `tdd` | `skill-api-design`, `skill-hermes-levels` |
+| 4 | Seguridad | `security-auditor` | `skill-code-review`, `writing-guidelines` |
+| 5 | Develop | `implement`, `tdd`, `review` | `react-best-practices`, `react-view-transitions`, `skill-refactoring`, `skill-git-workflow` |
+| 6 | QA | `diagnosing-bugs` / `diagnose`, `qa` | `skill-testing`, `auto-audit-loop` |
+| 6.5 | DevOps | `deploy-to-vercel`, `vercel-optimize` | `vercel-cli-with-tokens`, agente `devops-infra` |
+| 7 | GO/NO-GO | `handoff` / `claude-handoff` | `audit-pipeline`, `lifecycle-orchestrator` |
 
 ---
 
@@ -47,11 +48,13 @@ Tras `to-prd`, publicá en GitHub y registrá la feature en `pipeline-state.json
 
 | Situación | Skill |
 | --------- | ----- |
-| Bug o regresión | `diagnose` |
+| Bug o regresión | `diagnosing-bugs` (o `diagnose`) |
 | Tests antes/durante código | `tdd` |
-| Refactor grande | `improve-codebase-architecture` o `request-refactor-plan` |
-| Dividir trabajo en issues | `to-issues` |
-| Contexto de sesión larga | `handoff` |
+| Diseño y arquitectura de módulos | `codebase-design`, `improve-codebase-architecture` |
+| Componentes React y Next.js | `react-best-practices`, `composition-patterns` |
+| Despliegue y optimización | `deploy-to-vercel`, `vercel-optimize` |
+| Dividir trabajo en issues | `to-tickets` (o `to-issues`) |
+| Contexto de sesión larga | `handoff` (o `claude-handoff`) |
 | Token budget (Regla 6) | `handoff` + checkpoint `/checkpoint` |
 
 ---
